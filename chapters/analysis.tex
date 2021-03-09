@@ -1,0 +1,20 @@
+Dalla creazione di Git sono stati creati svariati client web, tra cui il più famoso GitHub. Qualunque sviluppatore in erba - o una persona che si definisce tale - ha un account GitHub o passa il tempo a smanettare la sezione \textit{Explore} per scoprire nuovi progetti. In questo caso io consiglio di guardare le repository \textit{awesome-\textbf{stack}} per scoprire progetti, più o meno famosi, che usano quel determinato stack. Gli sviluppatori più smanettoni hanno un'istanza di un client opensource instanziata sulla propria macchina (che sia GitLab, Gitea, CGit o qualsiasi altro).\\
+Ma rimaniamo in tema GitHub, dato che, anche se è proprietario e questo turba alcune persone, resta il miglior client web Git per pubblicizzare il proprio progetto. In continua evoluzione, da qualche mese oramai, la lista dei \textit{contributors} si trova in bella vista nella sidebar laterale. È una buona prassi, da parte di tutti, "stalkerare" i contributors per vedere se hanno altri progetti interessanti a cui hanno contribuito. \\\\
+Qui nasce proprio Gico, un software dove poter caricare le repositories delle altre persone e salvare tutti i commit in un database centralizzato. In questo modo si possono filtrare i commit per autore e vedere a quale repositories ne fanno parte. Si "stalkera" quindi nel medesimo modo in cui si fa nei social network, ma in modo non ossessivo e per una buona causa: la curiosità di trovare altri progetti interessanti da contribuire/usare.\\
+Per come è progettato, Git salva, all'interno dei commit, l'email e il nome dell'autore e del committer. Gico si occuperà di esaminare il log della repository salvando il commit e alcuni dei suoi dati utili a noi.
+\section{Glossario}
+Qui di seguito una lista delle parole chiavi impiegate all'interno del database.\\
+Come si può notare non c'è il termine "Utente" proprio perché non esiste, all'interno di Git, una concezione tale.
+\begin{center}
+\begin{tabular}{ |c|c|c|c|c| } 
+\hline
+Termine & Descrizione & Sinonimi & Termini collegati \\
+\hline
+Repository & Codice sorgente & Sourcecode, Progetto & \\
+Branch & Flusso di modifiche & Diramazione & Repository \\
+Commit & Modifica alla sourcecode & Modifica & Branch, Repository \\
+Autore & L'autore delle modifiche & Programmatore & Commit \\
+Committer & L'autore del commit & Code reviewer & Commit \\
+\hline
+\end{tabular}
+\end{center}
