@@ -1,0 +1,32 @@
+Gico è un software che tramite un'API RESTful permette la gestione di commit Git a scopo statistico.
+Scritto in Rust\footnote{https://www.rust-lang.com/} il backend si interfaccia ad un database relazionale chiamato PostgreSQL\footnote{https://www.postgresql.org/}.
+\section{Database}
+Un database è una collezione di dati organizzati. Un DBMS è un software capace di gestire suddetta mole di dati interagendo con l'utente eseguendo i comandi più tipici dell'algebra relazionale, qui chiamate \textit{query}.\\
+\subsection{SQL}
+In realtà il DBMS PostgreSQL fa riverimento al linguaggio SQL, il quale è suddiviso in diversi sottolinguaggi che, per l'appunto, suddividino il loro ruolo:
+\begin{itemize}
+	\item \textbf{DDL}: il Data Description Language è quello responsabile della gestione delle tabelle e degli indici (\verb|CREATE|, \verb|ALTER|, \verb|DROP|).
+	\item \textbf{DCL}: il Data Control Language è quello responsabile della gestione delle autorizzazioni. Esso gestisce, in particolare, quello che un utente può o non può fare all'interno della base di dati (\verb|GRANT|, \verb|REVOKE|).
+	\item \textbf{DML}: il Data Manipulation Language è quello responsabile della modifica dei dati (\verb|INSERT|, \verb|DELETE| e \verb|UPDATE|).
+	\item \textbf{QL}: il Query Language è quello che si occupa delle query, ovvero, \textit{iterrogazioni} e \textit{proiezioni} e \textit{giunzioni} (\verb|SELECT|).
+\end{itemize}
+
+\subsection{ACID}
+Il DBMS PostgreSQL permette il set di proprietà dette \textbf{ACID}:
+\begin{itemize}
+	\item \textbf{Atomicity}: una transazione deve eseguire tutte le operazioni di cui è composta, oppure nessuna; non può permettersi di lasciare operazioni indietro o smarrite.
+	\item \textbf{Consistency}: una transazione deve mantenere i dati coerenti con le specifiche imposte (come ad esempio chiavi primarie o esterne).
+	\item \textbf{Isolation}: le transazioni eseguite in concorrenza non corrompono il database; il loro funzionamento deve essere identico a delle transazioni eseguite in modo seriale.
+	\item \textbf{Durability}: una volta completata una transazione, sarà per sempre valida, anche in caso di errore nel sistema.
+\end{itemize}
+
+\subsection{Perché non MySQL?}
+Durante il corso di \textit{Basi di dati}\footnote{http://web.dmi.unict.it/corsi/l-31/insegnamenti/?cod=16709} abbiamo lavorato con il DBMS MySQL\footnote{https://www.mysql.com/}. Nel progetto Gico, però, ho deciso di utilizzare PostgreSQL perché quest'ultimo ha una migliore gestione dei triggers e il supporto a una quantità maggiore di query (esempio \verb|INTERSECT| o \verb|EXCEPT|) e tipi di dati.
+
+\section{Backend}
+Per la scrittura del codice lato backend è stato impiegato il framework web Actix\footnote{https://actix.rs/}. La sourcecode\footnote{https://github.com/gico-net/server} è totalmente opensource, distribuita sotto licenza \verb|GPL v3|.\\
+I dettagli tecnici esulano il corso di Basi di Dati, quindi li ometterò e lascerò al README file presente nella sourcecode su GitHub.
+
+\section{Frontend}
+La sourcecode del frontend\footnote{https://github.com/gico-net/client} è anch'esso opensource. Scritto con il framework Vue\footnote{https://vuejs.org/}.\\
+Anche questa parte esula il corso di Basi di Dati, quindi ometterò la descrizione in questo documento e rimando al README presente su GitHub.
