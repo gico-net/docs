@@ -1,7 +1,7 @@
 Qui di seguito è riportato il \verb|dump| in SQL per la creazione delle tabelle all'interno di PostgreSQL
 \begin{lstlisting}[language=SQL]
 CREATE TABLE "repository" (
-    id serial PRIMARY KEY NOT NULL,
+    id uuid PRIMARY KEY NOT NULL,
     url varchar(255) UNIQUE NOT NULL,
     created_date timestamp NOT NULL,
     updated_date timestamp NOT NULL,
@@ -26,9 +26,9 @@ CREATE TABLE "commit" (
 );
 
 CREATE TABLE "branch" (
-    id serial PRIMARY KEY NOT NULL,
+    id uuid PRIMARY KEY NOT NULL,
     name varchar(120) NOT NULL,
-    repository_id integer REFERENCES repository(id) NOT NULL,
+    repository_id uuid REFERENCES repository(id) NOT NULL,
     head varchar(40) REFERENCES commit(hash) NULL
 );
 \end{lstlisting}
