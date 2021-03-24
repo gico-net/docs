@@ -3,9 +3,9 @@ Qui di seguito è riportato il \verb|dump| in SQL per la creazione delle tabelle
 CREATE TABLE "repository" (
     id uuid PRIMARY KEY NOT NULL,
     url varchar(255) UNIQUE NOT NULL,
-    created_date timestamp NOT NULL,
-    updated_date timestamp NOT NULL,
-	uploader_ip varchar(15) NOT NULL
+    created_at timestamp NOT NULL DEFAULT NOW(),
+    updated_at timestamp NOT NULL DEFAULT NOW(),
+    uploader_ip varchar(21) NOT NULL
 );
 
 CREATE TABLE "email"(
@@ -17,7 +17,7 @@ CREATE TABLE "commit" (
     hash varchar(40) PRIMARY KEY NOT NULL,
     tree varchar(40) REFERENCES commit(hash) NULL,
     text text NOT NULL,
-    date timestamp NOT NULL,
+    date timestamptz NOT NULL,
     author_email varchar(120) REFERENCES email(email) NOT NULL,
     author_name varchar(120) NOT NULL,
     committer_email varchar(120) REFERENCES email(email) NOT NULL,
@@ -31,4 +31,29 @@ CREATE TABLE "branch" (
     repository_id uuid REFERENCES repository(id) NOT NULL,
     head varchar(40) REFERENCES commit(hash) NULL
 );
+\end{lstlisting}
+
+\section{Trigger}
+Qui di seguito si viene implementato un trigger che aggiorna automaticamente la data di \verb|updated_at| ogni qual volta si viene modificata una \verb|Repository|.
+\begin{lstlisting}[language=SQL]
+CREATE OR REPLACE FUNCTION update_repository_last_updates() RETURNS TRIGGER	AS $$
+BEGIN
+	NEW."updated_at" = NOW();
+	RETURN NEW;
+END;
+$$ LANGUAGE PLPGSQL;
+
+CREATE TRIGGER update_repository_t BEFORE UPDATE ON repository
+FOR EACH ROW
+EXECUTE PROCEDURE update_repository_last_updates();
+\end{lstlisting}
+
+\section{Top authors}
+Lato client si sarebbero potuti esaminare i dati presi dai commit ma, per velocizzare il tutto lato client, ho preferito inserire una query lato server con un'endpoint per trovare la TOP 7 degli sviluppatori con più commit di cui sono autori. \textit{Ho preferito non considerare i committers perché, se presi da GitHub, automaticamente il committer sarà sempre noreply@github.com}.
+
+\begin{lstlisting}[language=SQL]
+SELECT COUNT(hash) as num, author_email, author_name
+FROM commit
+GROUP BY author_email, author_name
+ORDER BY COUNT(hash) DESC
 \end{lstlisting}
